@@ -1,22 +1,26 @@
 import sys, json
 
-# Check README for more details about parameters
-def main(postTaxCash: float, annualIncome: float, isMarried: bool, isLongTermCapitalGains: bool, assetInitialCost: float):
-    taxRate = taxBracket(annualIncome, isMarried);
-    totalNeeded = float(postTaxCash)
+def main(postTaxCash: float, annualIncome: float, assetInitialCost: float, isMarried: bool, isLongTermCapitalGains: bool):
+    netProfit = float(postTaxCash) - float(assetInitialCost)
+    estimatedIncome = float(annualIncome) + float(postTaxCash)
+    taxRate = taxBracket(estimatedIncome, isMarried);
+    tax = float(netProfit) * float(taxRate)
+    total = float(tax) + float(postTaxCash)
 
-    print('You will need: ' + formatCash(totalNeeded))
+    print('You will need to sell ' + formatCash(total) + ' worth of assets to have ' + formatCash(float(postTaxCash)) + ' after taxes.')
 
 def taxBracket(annualIncome: float, isMarried: bool):
     with open('taxBrackets.json') as taxBrackets:
         taxBracket = json.load(taxBrackets)
     if isMarried:
-        findTaxRate(taxBracket['married'])
+        return findTaxRate(annualIncome, taxBracket['married'])
     else:
-        findTaxRate(taxBracket['single'])
+        return findTaxRate(annualIncome, taxBracket['single'])
 
-def findTaxRate(taxBracket):
-    print(taxBracket)
+def findTaxRate(annualIncome: float, taxBracket):
+    for bracket in taxBracket:
+        if float(annualIncome) >= bracket['min'] and float(annualIncome) <= bracket['max']:
+            return float(bracket['rate'] / 100)
 
 def formatCash(cash: float):
     return "${:,.2f}".format(cash)

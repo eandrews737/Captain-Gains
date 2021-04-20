@@ -2,7 +2,7 @@
 A Simple Captial Gains Calculator
 
 ## Summary
-A simple Python Script for calculating how much money you would need to have **X** amount after taxes.
+A simple python script for calculating how much money you would need to have **X** amount after taxes.
 For example, if you wanted to purchase a **$35,000** Tesla by selling a short-term asset and you make $60,000 a year, you would need to pull out **$43,400.00**.
 This is designed to give you a rough estimate of how much you would need.
 
@@ -10,6 +10,7 @@ This is designed to give you a rough estimate of how much you would need.
 1) Download the script
 2) CD into the folder
 3) Run the following command (remove the brackets and fill in the parameters)
+
 `python3 capitalGainsCalculator [cash] [annualIncome] [isMarried] [isLongTermCapitalGains] [assetInitialCost]`
 
 ## Paramters
@@ -20,9 +21,8 @@ This is designed to give you a rough estimate of how much you would need.
 * `float assetInitialCost`(optional) - How much did you pay for the asset? (Remember to account for percentages if you're not selling all of it). Defaults to 0.
 
 ## Tax Brackets
-This is the data I use for calculating taxes come from here:
-https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets
 More Info can be found in the taxBracket.json file.
+Tax bracket information comes from [here](https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets).
 
 ### Single Filers
 | Tax Rate | Tax Bracket |
