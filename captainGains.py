@@ -1,21 +1,35 @@
-import sys, json
+import json
 
-def main(postTaxCash: float, annualIncome: float, assetInitialCost: float, isMarried: bool, isLongTermCapitalGains: bool):
-    netProfit = float(postTaxCash) - float(assetInitialCost)
-    estimatedIncome = float(annualIncome) + float(postTaxCash)
-    taxRate = taxBracket(estimatedIncome, isMarried);
-    tax = float(netProfit) * float(taxRate)
-    total = float(tax) + float(postTaxCash)
+def main():
+    postTaxCash = float(input('How much post-tax money do you want? (decimal): '));
+    annualIncome = float(input('How much did you expect to make this year? (decimal): '));
+    assetInitialCost = float(input('How much did you pay for the asset? (decimal): '));
+    isLongTermHold = yes_or_no('Did you hold it for more than a year?')
+    isMarried = yes_or_no('Are you married?')
 
-    print('You will need to sell ' + formatCash(total) + ' worth of assets to have ' + formatCash(float(postTaxCash)) + ' after taxes.')
+    # Accounting calculations
+    estimatedIncome = annualIncome + postTaxCash - assetInitialCost
+    estimatedTaxRate = taxBracket(estimatedIncome, isLongTermHold, isMarried)  # tax bracket might be slightly off since we don't know the real total yet
+    estimatedTaxDue = postTaxCash * estimatedTaxRate  # tax rate cannot be estimated perfectly 
 
-def taxBracket(annualIncome: float, isMarried: bool):
+    total = postTaxCash + estimatedTaxDue
+    print('You will need to sell roughly ' + formatCash(total) + ' worth of assets to have ' + formatCash(float(postTaxCash)) + ' after taxes.')
+
+# Todo: account for longterm taxes
+def taxBracket(annualIncome: float, isLongTermHold: bool, isMarried: bool):
     with open('taxBrackets.json') as taxBrackets:
         taxBracket = json.load(taxBrackets)
-    if isMarried:
+
+    # pull out JSON tax data
+    if isMarried and not isLongTermHold:
         return findTaxRate(annualIncome, taxBracket['married'])
+    elif isMarried and isLongTermHold:
+        return findTaxRate(annualIncome, taxBracket['married'])
+    elif not isMarried and not isLongTermHold:
+        return findTaxRate(annualIncome, taxBracket['single'])
     else:
         return findTaxRate(annualIncome, taxBracket['single'])
+
 
 def findTaxRate(annualIncome: float, taxBracket):
     for bracket in taxBracket:
@@ -25,5 +39,13 @@ def findTaxRate(annualIncome: float, taxBracket):
 def formatCash(cash: float):
     return "${:,.2f}".format(cash)
 
+def yes_or_no(question):
+    while "the answer is invalid":
+        reply = str(input(question+' (y/n): ')).lower().strip()
+        if reply[:1] == 'y':
+            return True
+        if reply[:1] == 'n':
+            return False
+
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    main()
