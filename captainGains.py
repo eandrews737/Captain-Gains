@@ -4,7 +4,9 @@ def main():
     postTaxCash = float(input('How much post-tax money do you want? (decimal): '));
     annualIncome = float(input('How much did you expect to make this year? (decimal): '));
     assetInitialCost = float(input('How much did you pay for the asset? (decimal): '));
-    isLongTermHold = yes_or_no('Did you hold it for more than a year?')
+    # TODO: add long term gains tax brackets
+    # isLongTermHold = yes_or_no('Did you hold it for more than a year?')
+    isLongTermHold = FALSE
     isMarried = yes_or_no('Are you married?')
 
     # Accounting calculations
