@@ -5,20 +5,22 @@ A Simple Captial Gains Calculator
 A simple python script for calculating how much money you would need to have **X** amount after taxes.
 For example, if you wanted to purchase a **$35,000** Tesla by selling a short-term asset and you make $60,000 a year, you would need to pull out **$43,400.00**.
 This is designed to give you a rough estimate of how much you would need.
+The formula is used to estimate the pre-tax income formula used by auditors: 
+`Pre-tax cost of equity = Post-tax cost of equity ÷ (1 – tax rate)`
 
 ## How to Run
 1) Download the script
 2) CD into the folder
 3) Run the following command (remove the brackets and fill in the parameters)
 
-`python3 capitalGainsCalculator [cash] [annualIncome] [isMarried] [isLongTermCapitalGains] [assetInitialCost]`
+`python3 capitalGainsCalculator`
 
 ## Paramters
-* `float cash` - How much post-tax cash do you want?
-* `float annualIncome` - How much do you normally make a year?
-* `bool isMarried`(optional) - Are you married and filing together? Defauls to false.
-* `bool isLongTermCapitalGains`(optional) - Have you held the asset your selling for more than a year? Defaults to false (short-term).
-* `float assetInitialCost`(optional) - How much did you pay for the asset? (Remember to account for percentages if you're not selling all of it). Defaults to 0.
+* `float` - How much post-tax cash do you want?
+* `float` - How much do you normally make a year?
+* `bool` - Are you married and filing together?
+* `bool` - Have you held the asset your selling for more than a year?
+* `float` - How much did you pay for the asset? (Remember to account for percentages if you're not selling all of it).
 
 ## Tax Brackets
 More Info can be found in the taxBracket.json file.
